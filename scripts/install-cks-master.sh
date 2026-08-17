@@ -6,7 +6,7 @@ INSTALL_FALCO=true
 download_and_customize_script() {
     local url="https://raw.githubusercontent.com/killer-sh/cks-course-environment/master/cluster-setup/${INSTALL_SCRIPT}/install_master.sh"
     local script
-    script=$(curl -ssL "$url")
+    script=$(curl -fssL --retry 5 --retry-delay 10 "$url")
 
     script=$(echo "$script" | set_shebang)
     script=$(echo "$script" | adjust_architecture)
