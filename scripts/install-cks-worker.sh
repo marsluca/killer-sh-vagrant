@@ -51,7 +51,7 @@ add_falco() {
 }
 
 fix_rm_usage() {
-    sed 's/\brm \([^ ]\)/rm -f \1/g'
+    sed 's/^\([[:space:]]*\)rm /\1rm -f /g'
 }
 
 bash -x <( \

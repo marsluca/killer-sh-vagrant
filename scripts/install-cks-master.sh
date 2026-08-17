@@ -13,9 +13,19 @@ download_and_customize_script() {
     script=$(echo "$script" | customize_kubeadm_init)
     [[ "$INSTALL_TRIVY" == "true" ]] && script=$(echo "$script" | add_trivy)
     [[ "$INSTALL_FALCO" == "true" ]] && script=$(echo "$script" | add_falco)
+    script=$(echo "$script" | fix_weave_image)
     script=$(echo "$script" | fix_rm_usage)
+    script=$(echo "$script" | fix_pod_network_cidr)
 
     echo "$script"
+}
+
+fix_weave_image() {
+    sed 's@kubectl apply -f https://raw.githubusercontent.com/killer-sh/cks-course-environment/master/cluster-setup/weave.yaml@curl -sL https://raw.githubusercontent.com/killer-sh/cks-course-environment/master/cluster-setup/weave.yaml | sed -e "s/:latest/:2.8.1/g" -e "s|192.168.0.0/16|10.50.0.0/16|g" | kubectl apply -f -@g'
+}
+
+fix_pod_network_cidr() {
+    sed '/kubeadm init/s|192.168.0.0/16|10.50.0.0/16|g'
 }
 
 set_shebang() {
@@ -62,7 +72,7 @@ add_falco() {
 }
 
 fix_rm_usage() {
-    sed 's/\brm \([^ ]\)/rm -f \1/g'
+    sed 's/^\([[:space:]]*\)rm /\1rm -f /g'
 }
 
 bash -x <( \

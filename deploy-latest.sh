@@ -24,5 +24,4 @@ join_node() {
 }
 
 start_vagrant
-join_node
 
