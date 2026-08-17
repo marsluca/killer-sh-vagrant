@@ -28,12 +28,13 @@ This repository offers a comprehensive setup for practicing for the CKA, CKAD, C
    - Apple Silicon
       - Install [VMware Fusion](https://www.vmware.com/products/fusion.html) (Download manually as the Homebrew cask is no longer available).
       - Install [Vagrant VMware Utility](https://developer.hashicorp.com/vagrant/docs/providers/vmware/vagrant-vmware-utility). Run `brew install vagrant-vmware-utility`
+      - Install Vagrant VMware Desktop plugin. Run `vagrant plugin install vagrant-vmware-desktop`
    - x86_AMD64
       - Install [VirtualBox](https://www.virtualbox.org/). Run `brew install --cask virtualbox`
 2. **Deployment**:
-   - Use provided script to deploy the Kubernetes cluster run `./deploy-latest.sh`.
+   - Use the provided script to deploy the Kubernetes cluster, run `./deploy-latest.sh`.
 3. **Clean Up**:
-   - Remove all VMs and resources run `./cleanup.sh` after practice sessions.
+   - To remove all VMs and resources, run `./cleanup.sh` after practice sessions.
 
 ## Usage
 - **Deploy Latest Kubernetes Cluster**: `./deploy-latest.sh`
