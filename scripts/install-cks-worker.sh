@@ -6,7 +6,7 @@ INSTALL_FALCO=true
 download_and_customize_script() {
     local url="https://raw.githubusercontent.com/killer-sh/cks-course-environment/master/cluster-setup/${INSTALL_SCRIPT}/install_worker.sh"
     local script
-    script=$(curl -s "$url")
+    script=$(curl -fssL --retry 5 --retry-delay 10 "$url")
 
     script=$(echo "$script" | set_shebang)
     script=$(echo "$script" | adjust_architecture)
@@ -51,7 +51,7 @@ add_falco() {
 }
 
 fix_rm_usage() {
-    sed 's/\brm \([^ ]\)/rm -f \1/g'
+    sed 's/^\([[:space:]]*\)rm /\1rm -f /g'
 }
 
 bash -x <( \
